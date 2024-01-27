@@ -1,8 +1,7 @@
 using UnityEngine;
 
 namespace DefaultNamespace {
-  [CreateAssetMenu(fileName = "FILENAME", menuName = "MENUNAME", order = 0)]
+  [CreateAssetMenu(fileName = "Item Information", menuName = "Item/DataInfo", order = 0)]
   public class ItemData : ScriptableObject {
-    
   }
 }
