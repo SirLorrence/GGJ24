@@ -44,6 +44,15 @@ public partial class @PlayerActionsMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""6cd859df-2dff-4789-ae79-f2415c7ef829"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -134,6 +143,17 @@ public partial class @PlayerActionsMap: IInputActionCollection2, IDisposable
                     ""action"": ""LookAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ffacaa6c-c4d7-4842-9838-1d7e061fa587"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -172,6 +192,7 @@ public partial class @PlayerActionsMap: IInputActionCollection2, IDisposable
         m_DefaultMap = asset.FindActionMap("DefaultMap", throwIfNotFound: true);
         m_DefaultMap_MoveAction = m_DefaultMap.FindAction("MoveAction", throwIfNotFound: true);
         m_DefaultMap_LookAction = m_DefaultMap.FindAction("LookAction", throwIfNotFound: true);
+        m_DefaultMap_Interact = m_DefaultMap.FindAction("Interact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -235,12 +256,14 @@ public partial class @PlayerActionsMap: IInputActionCollection2, IDisposable
     private List<IDefaultMapActions> m_DefaultMapActionsCallbackInterfaces = new List<IDefaultMapActions>();
     private readonly InputAction m_DefaultMap_MoveAction;
     private readonly InputAction m_DefaultMap_LookAction;
+    private readonly InputAction m_DefaultMap_Interact;
     public struct DefaultMapActions
     {
         private @PlayerActionsMap m_Wrapper;
         public DefaultMapActions(@PlayerActionsMap wrapper) { m_Wrapper = wrapper; }
         public InputAction @MoveAction => m_Wrapper.m_DefaultMap_MoveAction;
         public InputAction @LookAction => m_Wrapper.m_DefaultMap_LookAction;
+        public InputAction @Interact => m_Wrapper.m_DefaultMap_Interact;
         public InputActionMap Get() { return m_Wrapper.m_DefaultMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -256,6 +279,9 @@ public partial class @PlayerActionsMap: IInputActionCollection2, IDisposable
             @LookAction.started += instance.OnLookAction;
             @LookAction.performed += instance.OnLookAction;
             @LookAction.canceled += instance.OnLookAction;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         private void UnregisterCallbacks(IDefaultMapActions instance)
@@ -266,6 +292,9 @@ public partial class @PlayerActionsMap: IInputActionCollection2, IDisposable
             @LookAction.started -= instance.OnLookAction;
             @LookAction.performed -= instance.OnLookAction;
             @LookAction.canceled -= instance.OnLookAction;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         public void RemoveCallbacks(IDefaultMapActions instance)
@@ -305,5 +334,6 @@ public partial class @PlayerActionsMap: IInputActionCollection2, IDisposable
     {
         void OnMoveAction(InputAction.CallbackContext context);
         void OnLookAction(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }
