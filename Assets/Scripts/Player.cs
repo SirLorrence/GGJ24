@@ -2,32 +2,35 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
 using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour {
+  [Header("Movement Settings")] [SerializeField]
+  private float m_movementSpeed = 5.0f;
+
+  [Range(0, 10f)] [SerializeField] private float m_lookSensitivity = 5.0f;
+
+  [Header("Camera Settings")] [SerializeField]
+  private float m_cameraTiltSmooth;
+
+  private PlayerInput m_playerInput;
   private PlayerActionsMap m_playerActionMap;
 
   private Vector2 m_moveVector;
-
   private Vector2 m_lookVector;
+  private Vector3 m_offset;
 
   private Rigidbody m_rigidbody;
   private Camera m_playerCamera;
 
-  [SerializeField] private float m_movementSpeed;
-  [Range(0, 10f)] [SerializeField] private float m_lookSensitivity = 5.0f;
-  // [Range(0,10f)][SerializeField] private float m_controllerSensitivity = 5.0f; 
-
   float m_cameraYaw = 0f;
   float m_cameraPitch = 0f;
 
-  private Keyboard m_keyboard;
   private bool m_isController;
-  private PlayerInput m_playerInput;
-
 
   # region Unity Behaviours
 
@@ -35,7 +38,7 @@ public class Player : MonoBehaviour {
     m_playerActionMap = new PlayerActionsMap();
     m_rigidbody = GetComponent<Rigidbody>();
     m_playerCamera = GetComponentInChildren<Camera>();
-    m_playerCamera.transform.localPosition = new Vector3(0, 0.7f, 0);
+    m_playerCamera.transform.localPosition = new Vector3(0, transform.localScale.y - .2f, 0);
     m_playerInput = GetComponent<PlayerInput>();
   }
 
@@ -45,7 +48,6 @@ public class Player : MonoBehaviour {
     m_playerActionMap.DefaultMap.Enable();
   }
 
-  private Vector3 m_offset;
 
   void Start() {
     m_offset = m_playerCamera.transform.position - transform.position;
@@ -80,6 +82,13 @@ public class Player : MonoBehaviour {
                                ((vectorPositionX + vectorPositionY).normalized) *
                                (m_movementSpeed * Time.deltaTime));
     }
+
+    // body (head) tilt
+    Vector3 tiltDirection = new Vector3(m_moveVector.y, 0, -m_moveVector.x);
+    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(tiltDirection),
+      m_cameraTiltSmooth * Time.deltaTime);
+    
+    
   }
 
   private void CameraMovement() {
@@ -90,7 +99,7 @@ public class Player : MonoBehaviour {
 
     m_cameraPitch = Mathf.Clamp(m_cameraPitch, -60, 60);
 
-    transform.localEulerAngles = new Vector3(0, m_cameraYaw, 0);
+    transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, m_cameraYaw, transform.localEulerAngles.z);
     m_playerCamera.transform.localEulerAngles = new Vector3(-m_cameraPitch, 0);
   }
 
