@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour {
   public float RemainingTime => m_remainingTime;
   public float MaxTime => m_maxTime;
   public float EmploymentWeight => m_employmentWeight;
+  public GameObject GetPlayer => m_playerReference;
 
   [SerializeField] private float m_employmentWeight;
   [SerializeField] private BossBehaviour m_bossGuy;
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour {
   private bool m_initLoadGame;
 
   private static GameManager m_instance;
+  private GameObject m_playerReference;
 
   public static GameManager Instance() {
     if (m_instance == null) {
@@ -120,6 +122,14 @@ public class GameManager : MonoBehaviour {
   #region GameActions
 
   private void OnGameStart() {
+    if (m_playerReference == null) {
+      m_playerReference = GameObject.FindWithTag("Player");
+    }
+
+    if (m_bossGuy == null) {
+      m_bossGuy = GameObject.FindWithTag("Boss").GetComponent<BossBehaviour>();
+    }
+
     m_remainingTime = m_maxTime;
     m_employmentWeight = 0;
 #if DEBUG && UNITY_EDITOR
