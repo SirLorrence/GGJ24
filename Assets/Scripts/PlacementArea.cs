@@ -6,11 +6,12 @@ public class PlacementArea : MonoBehaviour {
   [SerializeField] private Transform m_placementTransform;
   private MeshRenderer m_meshRenderer;
 
-  private event Action<float> m_modifyScore;
+  private event Action<ItemEffect> m_modifyScore;
 
   private void Start() {
     m_meshRenderer = GetComponent<MeshRenderer>();
-    m_modifyScore += GameManager.Instance().AddToEmploymentWeight;
+    m_modifyScore += GameManager.Instance().AddToFunninessWeight;
+    
   }
 
   private void LateUpdate() {
@@ -19,10 +20,11 @@ public class PlacementArea : MonoBehaviour {
 
 
   private void OnTriggerEnter(Collider other) {
-    if (other.CompareTag("Player")) {
+    if (other.CompareTag("Player") && m_player.HoldingItem) {
       var itemRef = m_player.CarriedItem;
+      
       m_player.Drop(m_placementTransform);
-      m_modifyScore?.Invoke(itemRef.GetValue());
+      m_modifyScore?.Invoke(itemRef.ItemEffectWeight);
       Debug.Log("Drop Item");
     }
   }
