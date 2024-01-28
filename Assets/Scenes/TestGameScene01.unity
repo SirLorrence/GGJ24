@@ -877,7 +877,7 @@ PrefabInstance:
     - target: {fileID: 5011914252522261540, guid: 80a965dc55ff64ce28dd8ea49c85348c,
         type: 3}
       propertyPath: m_enableDebug
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8279605667127776605, guid: 80a965dc55ff64ce28dd8ea49c85348c,
         type: 3}
@@ -15753,6 +15753,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsTrigger
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6609058742182422019, guid: df7935d3dfefa7667b480c9ab972236b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6828803090531312032, guid: df7935d3dfefa7667b480c9ab972236b,
         type: 3}
