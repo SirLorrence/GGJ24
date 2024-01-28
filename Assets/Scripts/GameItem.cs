@@ -11,6 +11,8 @@ public class GameItem : MonoBehaviour {
   [Header("Item Settings")] [SerializeField]
   private ItemEffect m_itemEffectWeight;
 
+  [SerializeField] private AudioClip soundClip;
+
   private BoxCollider m_collider;
 
   private void Awake() {
@@ -22,6 +24,7 @@ public class GameItem : MonoBehaviour {
 
   public void SetDestroy() {
     m_collider.enabled = false;
+    if (soundClip != null ) ExampleAudioTrack.Instance.Play(soundClip);
     Destroy(this.gameObject, 5f);
   }
 }
