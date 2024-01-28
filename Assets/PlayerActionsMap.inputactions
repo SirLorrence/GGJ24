@@ -31,20 +31,18 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Quit",
+                    "type": "Button",
+                    "id": "d599f988-2400-442c-a0a5-cce554733753",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "2fa67d11-82b8-4450-a68b-0a3c5d1fbf20",
-                    "path": "<Gamepad>/leftStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "MoveAction",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "2D Vector",
                     "id": "a0eb785d-afae-492d-9a4e-c74cb84e1452",
@@ -102,17 +100,6 @@
                 },
                 {
                     "name": "",
-                    "id": "a1d6a67f-7b95-421f-b3f0-eadaca563da5",
-                    "path": "<Gamepad>/rightStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "LookAction",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "47dfe695-7f30-4a24-9ccf-75c9cfed8faa",
                     "path": "<Mouse>/delta",
                     "interactions": "",
@@ -132,6 +119,17 @@
                     "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "37d66a28-4692-4401-ab40-888babd8fb63",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "MultiTap",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Quit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
@@ -148,17 +146,6 @@
                 },
                 {
                     "devicePath": "<Mouse>",
-                    "isOptional": false,
-                    "isOR": false
-                }
-            ]
-        },
-        {
-            "name": "Controller",
-            "bindingGroup": "Controller",
-            "devices": [
-                {
-                    "devicePath": "<Gamepad>",
                     "isOptional": false,
                     "isOR": false
                 }
