@@ -131,6 +131,7 @@ public class GameManager : MonoBehaviour {
   }
 
   private IEnumerator OnGameEnd() {
+    ExampleAudioTrack.Instance.StopAll();
     m_initLoadGame = false;
     var levelID = SceneManager.GetActiveScene().buildIndex;
     yield return new WaitForSeconds(m_sceneRestartTime);
