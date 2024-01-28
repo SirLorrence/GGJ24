@@ -9,10 +9,14 @@ public class UIManager : MonoBehaviour {
   [SerializeField] Text timerTextUI;
   [SerializeField] Image scoreUI;
   [SerializeField] GameObject[] tutorialUI;
+  [SerializeField] GameObject winCanvas;
+  [SerializeField] GameObject loseCanvas;
 
   void Start ()
   {
     StartCoroutine(HideUI());
+    winCanvas.SetActive(false);
+    loseCanvas.SetActive(false);
   }
 
   // Update is called once per frame
@@ -30,5 +34,20 @@ public class UIManager : MonoBehaviour {
         {
             tutorial.gameObject.SetActive(false);
         }
+    }
+
+    public void OnWin()
+    {
+        winCanvas.SetActive(true);
+    }
+
+    public void OnLose()
+    {
+        loseCanvas.SetActive(true);
+    }
+    public void OnReset()
+    {
+        winCanvas.SetActive(false);
+        loseCanvas.SetActive(false);
     }
 }
