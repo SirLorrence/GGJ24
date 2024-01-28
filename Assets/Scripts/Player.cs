@@ -165,8 +165,7 @@ public class Player : MonoBehaviour {
   }
 
   private void PickUp() {
-    m_canPickUp = false;
-    m_holdingItem = true;
+
     RaycastHit hitout;
     if (Physics.Raycast(m_playerCamera.transform.position, m_playerCamera.transform.forward, out hitout, m_rayDistance,
           m_pickupLayer)) {
@@ -175,6 +174,8 @@ public class Player : MonoBehaviour {
       m_carriedItem.gameObject.transform.localPosition = Vector3.zero;
       m_carriedItem.gameObject.transform.localRotation = quaternion.identity;
       m_carriedItem.SetCarry(true);
+      m_canPickUp = false;
+      m_holdingItem = true;
     }
   }
 

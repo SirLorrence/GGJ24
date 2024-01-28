@@ -3,20 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameItem : MonoBehaviour {
-  private enum ItemEffect {
-    kMarjorPositive,
-    kPositive,
-    kNegative,
-    kMarjorPostive,
-    kFire,
-  }
-
   // private LayerMask m_itemMask;
+  public ItemEffect ItemEffectWeight => m_itemEffectWeight;
 
   [Header("Item Settings")] [SerializeField]
-  private ItemEffect m_itemEffect;
+  private ItemEffect m_itemEffectWeight;
 
   private BoxCollider m_collider;
 
@@ -32,14 +26,16 @@ public class GameItem : MonoBehaviour {
     m_collider.enabled = !value;
   }
 
-  public float GetValue() {
-    return m_itemEffect switch {
-      ItemEffect.kMarjorPositive => 0.25f,
-      ItemEffect.kPositive => 0.1f,
-      ItemEffect.kNegative => -0.1f,
-      ItemEffect.kMarjorPostive => -.25f,
-      ItemEffect.kFire => -1f,
-      _ => throw new ArgumentOutOfRangeException()
-    };
+  public void SetDestroy() {
+    m_collider.enabled = false;
+    Destroy(this.gameObject, 5f);
   }
+}
+
+public enum ItemEffect {
+  kVeryFunny,
+  kFunny,
+  kLittleFunny,
+  kNone,
+  kNotFunnyDidntLaugh,
 }
