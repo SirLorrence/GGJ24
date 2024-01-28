@@ -53,20 +53,18 @@ public partial class @PlayerActionsMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Quit"",
+                    ""type"": ""Button"",
+                    ""id"": ""d599f988-2400-442c-a0a5-cce554733753"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""2fa67d11-82b8-4450-a68b-0a3c5d1fbf20"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""MoveAction"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": ""2D Vector"",
                     ""id"": ""a0eb785d-afae-492d-9a4e-c74cb84e1452"",
@@ -124,17 +122,6 @@ public partial class @PlayerActionsMap: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""a1d6a67f-7b95-421f-b3f0-eadaca563da5"",
-                    ""path"": ""<Gamepad>/rightStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""LookAction"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""47dfe695-7f30-4a24-9ccf-75c9cfed8faa"",
                     ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
@@ -152,6 +139,17 @@ public partial class @PlayerActionsMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""PC"",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""37d66a28-4692-4401-ab40-888babd8fb63"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": ""MultiTap"",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Quit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -174,17 +172,6 @@ public partial class @PlayerActionsMap: IInputActionCollection2, IDisposable
                     ""isOR"": false
                 }
             ]
-        },
-        {
-            ""name"": ""Controller"",
-            ""bindingGroup"": ""Controller"",
-            ""devices"": [
-                {
-                    ""devicePath"": ""<Gamepad>"",
-                    ""isOptional"": false,
-                    ""isOR"": false
-                }
-            ]
         }
     ]
 }");
@@ -193,6 +180,7 @@ public partial class @PlayerActionsMap: IInputActionCollection2, IDisposable
         m_DefaultMap_MoveAction = m_DefaultMap.FindAction("MoveAction", throwIfNotFound: true);
         m_DefaultMap_LookAction = m_DefaultMap.FindAction("LookAction", throwIfNotFound: true);
         m_DefaultMap_Interact = m_DefaultMap.FindAction("Interact", throwIfNotFound: true);
+        m_DefaultMap_Quit = m_DefaultMap.FindAction("Quit", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -257,6 +245,7 @@ public partial class @PlayerActionsMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_DefaultMap_MoveAction;
     private readonly InputAction m_DefaultMap_LookAction;
     private readonly InputAction m_DefaultMap_Interact;
+    private readonly InputAction m_DefaultMap_Quit;
     public struct DefaultMapActions
     {
         private @PlayerActionsMap m_Wrapper;
@@ -264,6 +253,7 @@ public partial class @PlayerActionsMap: IInputActionCollection2, IDisposable
         public InputAction @MoveAction => m_Wrapper.m_DefaultMap_MoveAction;
         public InputAction @LookAction => m_Wrapper.m_DefaultMap_LookAction;
         public InputAction @Interact => m_Wrapper.m_DefaultMap_Interact;
+        public InputAction @Quit => m_Wrapper.m_DefaultMap_Quit;
         public InputActionMap Get() { return m_Wrapper.m_DefaultMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -282,6 +272,9 @@ public partial class @PlayerActionsMap: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @Quit.started += instance.OnQuit;
+            @Quit.performed += instance.OnQuit;
+            @Quit.canceled += instance.OnQuit;
         }
 
         private void UnregisterCallbacks(IDefaultMapActions instance)
@@ -295,6 +288,9 @@ public partial class @PlayerActionsMap: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @Quit.started -= instance.OnQuit;
+            @Quit.performed -= instance.OnQuit;
+            @Quit.canceled -= instance.OnQuit;
         }
 
         public void RemoveCallbacks(IDefaultMapActions instance)
@@ -321,19 +317,11 @@ public partial class @PlayerActionsMap: IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_PCSchemeIndex];
         }
     }
-    private int m_ControllerSchemeIndex = -1;
-    public InputControlScheme ControllerScheme
-    {
-        get
-        {
-            if (m_ControllerSchemeIndex == -1) m_ControllerSchemeIndex = asset.FindControlSchemeIndex("Controller");
-            return asset.controlSchemes[m_ControllerSchemeIndex];
-        }
-    }
     public interface IDefaultMapActions
     {
         void OnMoveAction(InputAction.CallbackContext context);
         void OnLookAction(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnQuit(InputAction.CallbackContext context);
     }
 }

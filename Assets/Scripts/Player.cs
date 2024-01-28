@@ -10,7 +10,6 @@ using UnityEngine.InputSystem.Users;
 using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour {
-
   public bool HoldingItem => m_holdingItem;
   public GameItem CarriedItem => m_carriedItem;
 
@@ -45,7 +44,6 @@ public class Player : MonoBehaviour {
   private int m_pickupLayer;
   private int m_interactLayer;
 
-  private bool m_isController;
   private bool m_canInteract;
 
   private bool m_holdingItem;
@@ -61,7 +59,6 @@ public class Player : MonoBehaviour {
     m_playerCamera.transform.localPosition = new Vector3(0, transform.localScale.y - .2f, 0);
     m_playerInput = GetComponent<PlayerInput>();
 
-
     m_pickupLayer = 1 << LayerMask.NameToLayer("Pickable");
     m_interactLayer = 1 << LayerMask.NameToLayer("Interactable");
   }
@@ -72,6 +69,7 @@ public class Player : MonoBehaviour {
     m_playerActionMap.DefaultMap.Enable();
 
     m_playerActionMap.DefaultMap.Interact.performed += Interact;
+    m_playerActionMap.DefaultMap.Quit.performed += Quit;
   }
 
 
@@ -82,7 +80,6 @@ public class Player : MonoBehaviour {
 
   // Update is called once per frame
   void Update() {
-    HandInput();
     CameraMovement();
     WorldIntractable();
   }
@@ -128,10 +125,6 @@ public class Player : MonoBehaviour {
     m_playerCamera.transform.localEulerAngles = new Vector3(-m_cameraPitch, 0);
   }
 
-  private void HandInput() {
-    m_isController = m_playerInput.currentControlScheme.Equals("Controller");
-  }
-
   #endregion
 
 
@@ -165,7 +158,6 @@ public class Player : MonoBehaviour {
   }
 
   private void PickUp() {
-
     RaycastHit hitout;
     if (Physics.Raycast(m_playerCamera.transform.position, m_playerCamera.transform.forward, out hitout, m_rayDistance,
           m_pickupLayer)) {
@@ -186,6 +178,10 @@ public class Player : MonoBehaviour {
 
     m_holdingItem = false;
     m_carriedItem.SetCarry(false);
+  }
+
+  private void Quit(InputAction.CallbackContext context) {
+    Application.Quit(0);
   }
 
   #endregion
