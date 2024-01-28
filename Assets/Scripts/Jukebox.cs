@@ -1,6 +1,8 @@
+// Author: 2401lucas
+// Team: Xero Enthusiasm
+
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
 public class Jukebox : MonoBehaviour

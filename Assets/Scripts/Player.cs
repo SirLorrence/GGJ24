@@ -1,13 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+// Author: SirLorrence
+// Team: Xero Enthusiasm
+
 using Unity.Mathematics;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Users;
-using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour {
   public bool HoldingItem => m_holdingItem;

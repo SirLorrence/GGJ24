@@ -1,4 +1,6 @@
-using System;
+// Author: 2401lucas
+// Team: Xero Enthusiasm
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

@@ -1,8 +1,8 @@
-using System;
+// Author: SirLorrence
+// Team: Xero Enthusiasm
+
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PrinterInteraction : MonoBehaviour, IInteractionEvent {
   [SerializeField] private Transform m_interactionTransform;
