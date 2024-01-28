@@ -869,6 +869,16 @@ PrefabInstance:
       propertyPath: m_bossGuy
       value: 
       objectReference: {fileID: 226918635783769443}
+    - target: {fileID: 5011914252522261540, guid: 80a965dc55ff64ce28dd8ea49c85348c,
+        type: 3}
+      propertyPath: m_timeDebug
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5011914252522261540, guid: 80a965dc55ff64ce28dd8ea49c85348c,
+        type: 3}
+      propertyPath: m_enableDebug
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8279605667127776605, guid: 80a965dc55ff64ce28dd8ea49c85348c,
         type: 3}
       propertyPath: m_Name
