@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
   public float RemainingTime => m_remainingTime;
   public float MaxTime => m_maxTime;
+  public float EmploymentWeight => m_employmentWeight;
 
   [SerializeField] private float m_employmentWeight;
   [SerializeField] private BossBehaviour m_bossGuy;
@@ -24,7 +25,6 @@ public class GameManager : MonoBehaviour {
     kLoose,
     kWin,
   }
-
 
   private const float m_maxTime = 180; // 3min 
   private float m_remainingTime;
