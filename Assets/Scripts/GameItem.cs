@@ -31,4 +31,15 @@ public class GameItem : MonoBehaviour {
   public void SetCarry(bool value) {
     m_collider.enabled = !value;
   }
+
+  public float GetValue() {
+    return m_itemEffect switch {
+      ItemEffect.kMarjorPositive => 0.25f,
+      ItemEffect.kPositive => 0.1f,
+      ItemEffect.kNegative => -0.1f,
+      ItemEffect.kMarjorPostive => -.25f,
+      ItemEffect.kFire => -1f,
+      _ => throw new ArgumentOutOfRangeException()
+    };
+  }
 }

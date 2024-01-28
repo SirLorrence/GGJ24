@@ -12,6 +12,7 @@ using UnityEngine.Serialization;
 public class Player : MonoBehaviour {
 
   public bool HoldingItem => m_holdingItem;
+  public GameItem CarriedItem => m_carriedItem;
 
 
   [SerializeField] private float m_rayDistance;
