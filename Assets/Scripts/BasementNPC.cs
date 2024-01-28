@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+// Author: 2401lucas
+// Team: Xero Enthusiasm
+
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.Timeline;
 
 public class BasementNPC : MonoBehaviour
 {

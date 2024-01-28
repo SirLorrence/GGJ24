@@ -1,3 +1,6 @@
+// Author: SirLorrence
+// Team: Xero Enthusiasm
+
 using System;
 using UnityEngine;
 

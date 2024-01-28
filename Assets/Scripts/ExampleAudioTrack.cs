@@ -1,5 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+// Author: 2401lucas
+// Team: Xero Enthusiasm
+
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
