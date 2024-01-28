@@ -1,3 +1,6 @@
+// Authors: SirLorrence & 2401lucas
+// Team: Xero Enthusiasm
+
 using System;
 using System.Collections;
 using UnityEngine;
@@ -75,8 +78,8 @@ public class GameManager : MonoBehaviour {
 
         break;
       case GameState.kLoose:
-          m_uiManager.OnLose();
-          if (m_initLoadGame) {
+        m_uiManager.OnLose();
+        if (m_initLoadGame) {
           StartCoroutine(OnGameEnd());
         }
 
@@ -130,6 +133,7 @@ public class GameManager : MonoBehaviour {
     if (m_bossGuy == null) {
       m_bossGuy = GameObject.FindWithTag("Boss").GetComponent<BossBehaviour>();
     }
+
     m_uiManager.OnReset();
     m_remainingTime = m_maxTime;
     m_employmentWeight = 0;
