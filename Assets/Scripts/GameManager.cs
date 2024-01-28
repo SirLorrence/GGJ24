@@ -2,8 +2,26 @@ using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
+  public float RemainingTime => m_remainingTime;
+  public float MaxTime => m_maxTime;
+
   [SerializeField] private float m_employmentWeight;
   [SerializeField] private BossBehaviour m_bossGuy;
+
+
+  private enum GameState {
+    kMenu,
+    kRunning,
+    kLoose,
+    kWin,
+  }
+
+  [SerializeField] private GameState m_currentGameState = GameState.kMenu;
+
+  private const float m_maxTime = 180; // 3min 
+  private float m_remainingTime;
+
+  private bool m_initGame;
 
   private static GameManager m_instance;
 
@@ -19,6 +37,7 @@ public class GameManager : MonoBehaviour {
     return m_instance;
   }
 
+
   private void Awake() {
     if (m_instance == null) {
       m_instance = this;
@@ -33,7 +52,68 @@ public class GameManager : MonoBehaviour {
 
   private void Start() {
     m_employmentWeight = 0;
+
+
+    OnGameStart();
   }
+
+  private void Update() {
+    switch (m_currentGameState) {
+      case GameState.kMenu:
+        break;
+      case GameState.kRunning:
+        if (!CheckEndGameState()) {
+          m_remainingTime -= Time.deltaTime;
+        }
+
+        break;
+      case GameState.kLoose:
+        break;
+      case GameState.kWin:
+        break;
+      default:
+        throw new ArgumentOutOfRangeException();
+    }
+  }
+
+  #region GameState
+
+  bool CheckEndGameState() {
+    if (RemainingTime <= 0) {
+      m_currentGameState = GameState.kLoose;
+      return true;
+    }
+
+    if (m_employmentWeight > 1) {
+      m_currentGameState = GameState.kWin;
+      return true;
+    }
+
+    if (m_employmentWeight < -1) {
+      m_currentGameState = GameState.kLoose;
+      return true;
+    }
+
+
+    return false;
+  }
+
+  #endregion
+
+
+  #region GameActions
+
+  public void OnGameStart() {
+    m_remainingTime = m_maxTime;
+    m_currentGameState = GameState.kRunning;
+  }
+
+  public void OnGameEnd() {
+    m_currentGameState = GameState.kLoose;
+  }
+
+  #endregion
+
 
   public void AddToFunninessWeight(ItemEffect effectValue) {
     float weightScore = effectValue switch {
