@@ -13,4 +13,20 @@ public class BasementNPC : MonoBehaviour
     {
         track.PlayDelayed(10.0f);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            track.volume = 0.5f;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            track.volume = 0.0f;
+        }
+    }
 }

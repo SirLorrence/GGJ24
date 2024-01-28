@@ -6,18 +6,23 @@ using UnityEngine;
 public class OutlineWhenNear : MonoBehaviour
 {
     [SerializeField] MeshRenderer mr;
+    [SerializeField] SkinnedMeshRenderer smr;
     [SerializeField] Material outlineMaterial;
     [SerializeField] Material originalMaterial;
 
     private void Start()
     {
-        mr = GetComponent<MeshRenderer>();
+        if (!TryGetComponent<MeshRenderer>(out mr))
+            smr = GetComponent<SkinnedMeshRenderer>();
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            mr.material = outlineMaterial;
+            if (mr != null)
+                mr.material = outlineMaterial;
+            if (smr != null)
+                smr.material = outlineMaterial;
         }
     }
 
@@ -26,7 +31,10 @@ public class OutlineWhenNear : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            mr.material = originalMaterial;
+            if (mr != null)
+                mr.material = originalMaterial;
+            if (smr != null)
+                smr.material = originalMaterial;
         }
     }
 }

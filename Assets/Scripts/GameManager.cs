@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
   public float RemainingTime => m_remainingTime;
   public float MaxTime => m_maxTime;
+  public float EmploymentWeight => m_employmentWeight;
+  public GameObject GetPlayer => m_playerReference;
 
   [SerializeField] private float m_employmentWeight;
   [SerializeField] private BossBehaviour m_bossGuy;
@@ -25,13 +27,14 @@ public class GameManager : MonoBehaviour {
     kWin,
   }
 
-
   private const float m_maxTime = 180; // 3min 
   private float m_remainingTime;
 
   private bool m_initLoadGame;
 
   private static GameManager m_instance;
+  private GameObject m_playerReference;
+  [SerializeField] private UIManager m_uiManager;
 
   public static GameManager Instance() {
     if (m_instance == null) {
@@ -72,14 +75,14 @@ public class GameManager : MonoBehaviour {
 
         break;
       case GameState.kLoose:
-        //TODO: loose screen
-        if (m_initLoadGame) {
+          m_uiManager.OnLose();
+          if (m_initLoadGame) {
           StartCoroutine(OnGameEnd());
         }
 
         break;
       case GameState.kWin:
-        //TODO: win screen
+        m_uiManager.OnWin();
         if (m_initLoadGame) {
           StartCoroutine(OnGameEnd());
         }
@@ -120,6 +123,14 @@ public class GameManager : MonoBehaviour {
   #region GameActions
 
   private void OnGameStart() {
+    if (m_playerReference == null) {
+      m_playerReference = GameObject.FindWithTag("Player");
+    }
+
+    if (m_bossGuy == null) {
+      m_bossGuy = GameObject.FindWithTag("Boss").GetComponent<BossBehaviour>();
+    }
+    m_uiManager.OnReset();
     m_remainingTime = m_maxTime;
     m_employmentWeight = 0;
 #if DEBUG && UNITY_EDITOR
@@ -131,6 +142,7 @@ public class GameManager : MonoBehaviour {
   }
 
   private IEnumerator OnGameEnd() {
+    ExampleAudioTrack.Instance.StopAll();
     m_initLoadGame = false;
     var levelID = SceneManager.GetActiveScene().buildIndex;
     yield return new WaitForSeconds(m_sceneRestartTime);

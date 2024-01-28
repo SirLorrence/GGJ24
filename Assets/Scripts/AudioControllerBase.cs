@@ -32,6 +32,12 @@ public class AudioControllerBase : MonoBehaviour
             playingAudioSources[i].Stop();
     }
 
+    public void StopAll()
+    {
+        foreach(AudioSource source in playingAudioSources)
+            source.Stop();
+    }
+
     public void Pause() { 
         for (int i = 0; i < playingAudioSources.Count; i++)
             playingAudioSources[i].Pause();
@@ -114,6 +120,7 @@ public class AudioControllerBase : MonoBehaviour
         }
 
         track.gameObject.SetActive(true);
+        playingAudioSources.Add(track);
 
         return track;
     }
