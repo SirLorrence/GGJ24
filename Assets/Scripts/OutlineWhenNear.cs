@@ -32,9 +32,9 @@ public class OutlineWhenNear : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             if (mr != null)
-                mr.material = outlineMaterial;
+                mr.material = originalMaterial;
             if (smr != null)
-                smr.material = outlineMaterial;
+                smr.material = originalMaterial;
         }
     }
 }

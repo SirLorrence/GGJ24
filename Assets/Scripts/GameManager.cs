@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour {
 
   private static GameManager m_instance;
   private GameObject m_playerReference;
+  [SerializeField] private UIManager m_uiManager;
 
   public static GameManager Instance() {
     if (m_instance == null) {
@@ -74,14 +75,14 @@ public class GameManager : MonoBehaviour {
 
         break;
       case GameState.kLoose:
-        //TODO: loose screen
-        if (m_initLoadGame) {
+          m_uiManager.OnLose();
+          if (m_initLoadGame) {
           StartCoroutine(OnGameEnd());
         }
 
         break;
       case GameState.kWin:
-        //TODO: win screen
+        m_uiManager.OnWin();
         if (m_initLoadGame) {
           StartCoroutine(OnGameEnd());
         }
@@ -129,7 +130,7 @@ public class GameManager : MonoBehaviour {
     if (m_bossGuy == null) {
       m_bossGuy = GameObject.FindWithTag("Boss").GetComponent<BossBehaviour>();
     }
-
+    m_uiManager.OnReset();
     m_remainingTime = m_maxTime;
     m_employmentWeight = 0;
 #if DEBUG && UNITY_EDITOR
