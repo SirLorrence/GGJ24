@@ -145,7 +145,7 @@ public class Player : MonoBehaviour {
       }
 
       if ((objectMask & m_interactLayer) == m_interactLayer) {
-        Debug.Log("Open?");
+        Debug.Log("Interact?");
         m_canInteract = true;
       }
     }
@@ -154,6 +154,21 @@ public class Player : MonoBehaviour {
   private void Interact(InputAction.CallbackContext context) {
     if (m_canPickUp && !m_holdingItem) {
       PickUp();
+    }
+
+    if (m_canInteract && !m_holdingItem) {
+      ObjectInteraction();
+    }
+  }
+
+  private void ObjectInteraction() {
+    RaycastHit hitout;
+    if (Physics.Raycast(m_playerCamera.transform.position, m_playerCamera.transform.forward, out hitout, m_rayDistance,
+          m_interactLayer)) {
+      var objEvent = hitout.transform.gameObject.GetComponent<IInteractionEvent>();
+      if (!objEvent.HasPlayed) {
+        objEvent.PlayEvent();
+      }
     }
   }
 
