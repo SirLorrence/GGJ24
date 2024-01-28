@@ -25,6 +25,11 @@ public class GameItem : MonoBehaviour {
   public void SetCarry(bool value) {
     m_collider.enabled = !value;
   }
+
+  public void SetDestroy() {
+    m_collider.enabled = false;
+    Destroy(this.gameObject, 5f);
+  }
 }
 
 public enum ItemEffect {

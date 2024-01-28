@@ -22,9 +22,9 @@ public class PlacementArea : MonoBehaviour {
   private void OnTriggerEnter(Collider other) {
     if (other.CompareTag("Player") && m_player.HoldingItem) {
       var itemRef = m_player.CarriedItem;
-      
       m_player.Drop(m_placementTransform);
       m_modifyScore?.Invoke(itemRef.ItemEffectWeight);
+      itemRef.SetDestroy();
       Debug.Log("Drop Item");
     }
   }
